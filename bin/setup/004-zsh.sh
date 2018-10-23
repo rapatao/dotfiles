@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen";
+git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen";
 
 echo -e '
 source ${HOME}/.dotfiles/bin/zsh/load-zsh-plugins.sh;
