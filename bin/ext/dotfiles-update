@@ -1,0 +1,21 @@
+#!/bin/zsh
+
+source "${HOME}/.zgen/zgen.zsh";
+
+# update zgen
+zgen selfupdate;
+zgen update;
+
+# update dotfiles
+git --git-dir=${HOME}/.dotfiles/.git pull
+
+# update dotfiles.d
+if [ -d ${HOME}/.dotfiles.d/.git ]; then
+    git --git-dir=${HOME}/.dotfiles.d/.git pull
+fi;
+
+# update homebrew
+brew update
+brew upgrade
+brew cask upgrade
+brew cleanup

@@ -28,4 +28,5 @@ zgen oh-my-zsh plugins/nvm
 zgen oh-my-zsh plugins/sudo
 
 # THEME
-zgen oh-my-zsh themes/steeef
+# zgen oh-my-zsh themes/steeef
+zgen oh-my-zsh themes/tjkirch
