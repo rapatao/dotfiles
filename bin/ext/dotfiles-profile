@@ -5,7 +5,7 @@ function unsetLinks() {
     echo "Removing the follow links:";
     ls -A ${HOME}/.dotfiles.d/symlinks | while read l; do \
         echo "Removing the link ${HOME}/${l} that points to ${HOME}/.dotfiles.d/symlinks/${l}";
-        #rm -rf ${HOME}/${l};
+        rm -rf ${HOME}/${l};
     done;
 }
 
@@ -13,13 +13,17 @@ function unsetLinks() {
 function setLinks() {
     ls -A ${HOME}/.dotfiles.d/symlinks | while read l; do \
         echo "Creating link ${HOME}/${l} that points to ${HOME}/.dotfiles.d/symlinks/${l}";
-        #ln -sf ${HOME}/.dotfiles.d/symlinks/${l} ${HOME}/${l};
+        ln -sf ${HOME}/.dotfiles.d/symlinks/${l} ${HOME}/${l};
+        if [[ -f ${HOME}/${l}/_setup.sh ]]; then
+            echo "Configuring symlink";
+            ${HOME}/${l}/_setup.sh;
+        fi;
     done;
 }
 
 # swap git branch
 function changeBranch() {
-    echo "git checkout ${1}";
+    git -C ${HOME}/.dotfiles.d/ checkout ${1};
 }
 
 if [[ ! -z ${1} ]]; then
