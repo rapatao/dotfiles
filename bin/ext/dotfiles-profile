@@ -26,12 +26,18 @@ function changeBranch() {
     git -C ${HOME}/.dotfiles.d/ checkout ${1};
 }
 
+function updateBranch() {
+    git -C ${HOME}/.dotfiles.d/ pull --all;
+}
+
 if [[ ! -z ${1} ]]; then
     unsetLinks;
     echo;
     changeBranch "${1}";
     echo;
     setLinks;
+    echo;
+    updateBranch;
     echo;
 else
     echo "Usage:";
