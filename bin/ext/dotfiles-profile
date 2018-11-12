@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# unset current symlinks
+function unsetLinks() {
+    echo "Removing the follow links:";
+    ls -A ${HOME}/.dotfiles.d/symlinks | while read l; do \
+        echo "Removing the link ${HOME}/${l} that points to ${HOME}/.dotfiles.d/symlinks/${l}";
+        #rm -rf ${HOME}/${l};
+    done;
+}
+
+# set symlinks
+function setLinks() {
+    ls -A ${HOME}/.dotfiles.d/symlinks | while read l; do \
+        echo "Creating link ${HOME}/${l} that points to ${HOME}/.dotfiles.d/symlinks/${l}";
+        #ln -sf ${HOME}/.dotfiles.d/symlinks/${l} ${HOME}/${l};
+    done;
+}
+
+# swap git branch
+function changeBranch() {
+    echo "git checkout ${1}";
+}
+
+if [[ ! -z ${1} ]]; then
+    unsetLinks;
+    echo;
+    changeBranch "${1}";
+    echo;
+    setLinks;
+    echo;
+else
+    echo "Usage:";
+    echo "  ${0##*\/} <profile name>";
+    echo "Example:";
+    echo "  ${0##*\/} personal";
+fi;

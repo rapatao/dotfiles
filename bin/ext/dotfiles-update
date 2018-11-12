@@ -7,11 +7,11 @@ zgen selfupdate;
 zgen update;
 
 # update dotfiles
-git --git-dir=${HOME}/.dotfiles/.git pull
+git --git-dir=${HOME}/.dotfiles/.git pull --all
 
 # update dotfiles.d
 if [ -d ${HOME}/.dotfiles.d/.git ]; then
-    git --git-dir=${HOME}/.dotfiles.d/.git pull
+    git --git-dir=${HOME}/.dotfiles.d/.git pull --all
 fi;
 
 # update homebrew
