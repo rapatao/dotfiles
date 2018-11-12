@@ -40,8 +40,12 @@ if [[ ! -z ${1} ]]; then
     updateBranch;
     echo;
 else
+    profile_name=$(git -C ${HOME}/.dotfiles.d branch | grep \* | cut -d ' ' -f2);
+    echo "In use: ${profile_name}";
+    echo;
     echo "Usage:";
     echo "  ${0##*\/} <profile name>";
     echo "Example:";
     echo "  ${0##*\/} personal";
+    echo;
 fi;
