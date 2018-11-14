@@ -15,7 +15,9 @@ if [ -d ${HOME}/.dotfiles.d/.git ]; then
 fi;
 
 # update homebrew
-brew update
-brew upgrade
-brew cask upgrade
-brew cleanup
+if [[ $(uname -s) == 'Darwin' ]]; then
+    brew update
+    brew upgrade
+    brew cask upgrade
+    brew cleanup
+fi;
