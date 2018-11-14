@@ -30,22 +30,52 @@ function updateBranch() {
     git -C ${HOME}/.dotfiles.d/ pull --all;
 }
 
-if [[ ! -z ${1} ]]; then
-    unsetLinks;
+function changeProfile() {
+    if [[ ! -z ${1} ]]; then
+        unsetLinks;
+        echo;
+        changeBranch "${1}";
+        echo;
+        setLinks;
+        echo;
+        updateBranch;
+        echo;
+    else 
+        printUsage;
+    fi
+}
+
+function actualProfile() {
+    git -C ${HOME}/.dotfiles.d branch | grep \* | cut -d ' ' -f2;
+}
+
+function printUsage() {
+    echo "Current profile: $(actualProfile)";
     echo;
-    changeBranch "${1}";
+    echo "Usage: ${0##*\/}";
+    echo "  -c <profile name>        change dotfile.d profile";
+    echo "  -s                       print current profile";
+    echo "  -i <git repository>      clone (install) dotfiles.d to ~/.dotfiles.d. WARNING: using this function the current \"dotfiles.d\" folder will be replaced."
+    echo "  -h                       print this usage help";
     echo;
-    setLinks;
+    echo "Examples:";
+    echo "  ${0##*\/} -c personal";
+    echo "  ${0##*\/} -i git@github.com:rapatao/dotfiles.d-template.git";
     echo;
-    updateBranch;
-    echo;
-else
-    profile_name=$(git -C ${HOME}/.dotfiles.d branch | grep \* | cut -d ' ' -f2);
-    echo "In use: ${profile_name}";
-    echo;
-    echo "Usage:";
-    echo "  ${0##*\/} <profile name>";
-    echo "Example:";
-    echo "  ${0##*\/} personal";
-    echo;
-fi;
+}
+
+function installDotfiles() {
+    rm -rf "${HOME}/.dotfiles.d";
+    git clone ${1} "${HOME}/.dotfiles.d"
+}
+
+while getopts :c:i:sh opt; do 
+    case $opt in
+        (c) changeProfile "$OPTARG";;
+        (s) actualProfile;;
+        (i) installDotfiles "$OPTARG";;
+        (h) printUsage;;
+        (\?) printUsage;
+            exit 1;;
+    esac
+done;
