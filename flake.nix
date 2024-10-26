@@ -49,7 +49,7 @@
 
             # development
             pkgs.jq
-            pkgs.yq
+            pkgs.yq-go
             pkgs.git
             pkgs.git-crypt
             pkgs.vim
@@ -65,6 +65,7 @@
 
           ++ (lib.optionals (apps.kubernetes) [
             pkgs.kubectl
+            pkgs.kubernetes-helm
             pkgs.helmfile
             pkgs.kustomize
           ])
