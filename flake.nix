@@ -11,68 +11,71 @@
   outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew }:
   let
     configuration = { pkgs, config, ... }: {
-      # List packages installed in system profile. To search by name, run:
-      # $ nix-env -qaP | grep wget
-      environment.systemPackages = [
-        # dotfiles
-        pkgs.yadm
-        pkgs.mkalias
+      
+      environment = {
+        # List packages installed in system profile. To search by name, run:
+        # $ nix-env -qaP | grep wget
+        systemPackages = [
+          # dotfiles
+          pkgs.yadm
+          pkgs.mkalias
 
-        # core tools
-        pkgs.coreutils
-        pkgs.moreutils
-        pkgs.findutils
-        pkgs.gnused
-        pkgs.unixtools.watch
-        pkgs.gnutar
+          # core tools
+          pkgs.coreutils
+          pkgs.moreutils
+          pkgs.findutils
+          pkgs.gnused
+          pkgs.unixtools.watch
+          pkgs.gnutar
 
-        # to evaluate later
-        pkgs.autojump
-        pkgs.ffmpeg
-        pkgs.imagemagick
-        
-        # certificates and secrets
-        pkgs.openssl
-        pkgs.gnupg
-        pkgs.infisical
-        pkgs.transcrypt
-        pkgs.sshpass
-        pkgs.pinentry-curses
-        pkgs.pinentry_mac
+          # to evaluate later
+          pkgs.autojump
+          pkgs.ffmpeg
+          pkgs.imagemagick
+          
+          # certificates and secrets
+          pkgs.openssl
+          pkgs.gnupg
+          pkgs.infisical
+          pkgs.transcrypt
+          pkgs.sshpass
+          pkgs.pinentry-curses
+          pkgs.pinentry_mac
 
-        # network tools
-        pkgs.wget
-        pkgs.curl
-        pkgs.inetutils
-        pkgs.dig
+          # network tools
+          pkgs.wget
+          pkgs.curl
+          pkgs.inetutils
+          pkgs.dig
 
-        # development
-        pkgs.jq
-        pkgs.yq
-        pkgs.git
-        pkgs.git-crypt
-        pkgs.vim
-        pkgs.neovim
-        pkgs.hugo
+          # development
+          pkgs.jq
+          pkgs.yq
+          pkgs.git
+          pkgs.git-crypt
+          pkgs.vim
+          pkgs.neovim
+          pkgs.hugo
 
-        # c lang
-        pkgs.cmake
-        
-        # golang
-        pkgs.go
-        pkgs.golangci-lint
+          # c lang
+          pkgs.cmake
+          
+          # golang
+          pkgs.go
+          pkgs.golangci-lint
 
-        # nodejs
-        pkgs.yarn
+          # nodejs
+          pkgs.yarn
 
-        # cloud managers
-        pkgs.flyctl
-        pkgs.awscli
+          # cloud managers
+          pkgs.flyctl
+          pkgs.awscli
 
-        # kubernetes
-        pkgs.helmfile
-        pkgs.kustomize
-      ];
+          # kubernetes
+          pkgs.helmfile
+          pkgs.kustomize
+        ];
+      };
 
       homebrew = {
         enable = true;
@@ -100,81 +103,105 @@
         masApps = {
           # "Yoink" = 457622435;
         };
-        onActivation.cleanup = "zap";
-        onActivation.autoUpdate = true;
-        onActivation.upgrade = true;
+        onActivation = {
+          cleanup = "zap";
+          autoUpdate = true;
+          upgrade = true;
+        };
       };
 
       fonts.packages = [
         (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
       ];
 
-      # configure aliases in applications folder (not working with alfred)
-      # system.activationScripts.applications.text = let
-      #   env = pkgs.buildEnv {
-      #     name = "system-applications";
-      #     paths = config.environment.systemPackages;
-      #     pathsToLink = "/Applications";
-      #   };
-      # in
-      #   pkgs.lib.mkForce ''
-      #     # Set up applications.
-      #     echo "setting up /Applications..." >&2
-      #     rm -rf /Applications/NixApps
-      #     mkdir -p /Applications/NixApps
-      #     find ${env}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
-      #     while read src; do
-      #       app_name=$(basename "$src")
-      #       echo "copying $src" >&2
-      #       ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/NixApps/$app_name"
-      #     done
-      #   '';
+      system = {
+        # configure aliases in applications folder (not working with alfred)
+        # activationScripts = {
+        #   applications = {
+        #     text = let
+        #       env = pkgs.buildEnv {
+        #         name = "system-applications";
+        #         paths = config.environment.systemPackages;
+        #         pathsToLink = "/Applications";
+        #       };
+        #     in
+        #       pkgs.lib.mkForce ''
+        #         # Set up applications.
+        #         echo "setting up /Applications..." >&2
+        #         rm -rf /Applications/NixApps
+        #         mkdir -p /Applications/NixApps
+        #         find ${env}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
+        #         while read src; do
+        #           app_name=$(basename "$src")
+        #           echo "copying $src" >&2
+        #           ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/NixApps/$app_name"
+        #         done
+        #       '';
+        #   };
+        # };
 
-      system.defaults = {
-        dock = {
-          autohide = false;
-          tilesize = 32;
-          show-recents = false;
-          showhidden = true;
-          persistent-apps = [
-            #"${pkgs.}"
-            "/applications/iTerm.app"
-            "/Applications/Slack.app"
-          ];
+        defaults = {
+          dock = {
+            autohide = false;
+            tilesize = 32;
+            show-recents = false;
+            showhidden = true;
+            persistent-apps = [
+              #"${pkgs.}"
+              "/applications/iTerm.app"
+              "/Applications/Slack.app"
+            ];
+          };
+
+          finder = {
+            FXPreferredViewStyle = "clmv";
+          };
+
+          NSGlobalDomain = {
+            AppleICUForce24HourTime = true;
+            AppleInterfaceStyle = "Dark";
+            KeyRepeat = 2;
+          };
         };
 
-        finder = {
-          FXPreferredViewStyle = "clmv";
-        };
+        # Set Git commit hash for darwin-version.
+        configurationRevision = self.rev or self.dirtyRev or null;
 
-        NSGlobalDomain = {
-          AppleICUForce24HourTime = true;
-          AppleInterfaceStyle = "Dark";
-          KeyRepeat = 2;
-        };
+        # Used for backwards compatibility, please read the changelog before changing.
+        # $ darwin-rebuild changelog
+        stateVersion = 5;
       };
 
       # Auto upgrade nix package and the daemon service.
-      services.nix-daemon.enable = true;
-      # nix.package = pkgs.nix;
+      services = {
+        nix-daemon = {
+          enable = true;
+        };
+      };
 
-      # Necessary for using flakes on this system.
-      nix.settings.experimental-features = "nix-command flakes";
+      nix = {
+        # package = pkgs.nix;
 
-      # Create /etc/zshrc that loads the nix-darwin environment.
-      programs.zsh.enable = true;  # default shell on catalina
-      # programs.fish.enable = true;
+        # Necessary for using flakes on this system.
+        settings = {
+          experimental-features = "nix-command flakes";
+        };
+      };
 
-      # Set Git commit hash for darwin-version.
-      system.configurationRevision = self.rev or self.dirtyRev or null;
-
-      # Used for backwards compatibility, please read the changelog before changing.
-      # $ darwin-rebuild changelog
-      system.stateVersion = 5;
+      programs = {
+        zsh = {
+          # Create /etc/zshrc that loads the nix-darwin environment.
+          enable = true;  # default shell on catalina
+        };
+      };
 
       # The platform the configuration will be used on.
-      nixpkgs.hostPlatform = "aarch64-darwin";
-      nixpkgs.config.allowUnfree = true;
+      nixpkgs = {
+        hostPlatform = "aarch64-darwin";
+        config = {
+          allowUnfree = true;
+          };
+      };
     };
   in
   {
