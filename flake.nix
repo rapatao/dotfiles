@@ -131,17 +131,27 @@
       #   '';
 
       system.defaults = {
-        dock.autohide = true;
-        dock.persistent-apps = [
-          #"${pkgs.}"
-          "/applications/iTerm.app"
-          "/Applications/Slack.app"
-        ];
-        finder.FXPreferredViewStyle = "clmv";
-        # loginwindow.GuestEnabled = false;
-        NSGlobalDomain.AppleICUForce24HourTime = true;
-        NSGlobalDomain.AppleInterfaceStyle = "Dark";
-        NSGlobalDomain.KeyRepeat = 2;
+        dock = {
+          autohide = false;
+          tilesize = 32;
+          show-recents = false;
+          showhidden = true;
+          persistent-apps = [
+            #"${pkgs.}"
+            "/applications/iTerm.app"
+            "/Applications/Slack.app"
+          ];
+        };
+
+        finder = {
+          FXPreferredViewStyle = "clmv";
+        };
+
+        NSGlobalDomain = {
+          AppleICUForce24HourTime = true;
+          AppleInterfaceStyle = "Dark";
+          KeyRepeat = 2;
+        };
       };
 
       # Auto upgrade nix package and the daemon service.
