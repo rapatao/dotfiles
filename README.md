@@ -1,11 +1,11 @@
 # dotfiles
 
-This is my new (under) development dotfiles using NixOS
+This is my new (under) development dotfiles using Nix
 
-# Install NixOS
+# Install Nix
 
 ```bash
-curl -s -L https://nixos.org/nix/install | sh
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 ```
 
 ## Configure environment
