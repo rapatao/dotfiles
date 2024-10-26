@@ -12,7 +12,7 @@
 
   outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew }:
     let
-      configuration = { pkgs, config, ... }: {
+      configuration = { pkgs, config, lib, apps, ... }: {
 
         environment = {
           # List packages installed in system profile. To search by name, run:
@@ -30,15 +30,12 @@
             pkgs.unixtools.watch
             pkgs.gnutar
 
-            # to evaluate later
+            # other
             pkgs.autojump
-            pkgs.ffmpeg
-            pkgs.imagemagick
 
-            # certificates and secrets
+            # certificates
             pkgs.openssl
             pkgs.gnupg
-            pkgs.infisical
             pkgs.transcrypt
             pkgs.sshpass
             pkgs.pinentry-curses
@@ -57,27 +54,39 @@
             pkgs.git-crypt
             pkgs.vim
             pkgs.neovim
-            pkgs.hugo
             pkgs.nixpkgs-fmt
+          ]
 
-            # c lang
-            pkgs.cmake
-
-            # golang
-            pkgs.go
-            pkgs.golangci-lint
-
-            # nodejs
-            pkgs.yarn
-
-            # cloud managers
+          ++ (lib.optionals (apps.cloud-manager) [
+            pkgs.infisical
             pkgs.flyctl
             pkgs.awscli
+          ])
 
-            # kubernetes
+          ++ (lib.optionals (apps.kubernetes) [
+            pkgs.kubectl
             pkgs.helmfile
             pkgs.kustomize
-          ];
+          ])
+
+          ++ (lib.optionals (apps.c-lang) [
+            pkgs.cmake
+          ])
+
+          ++ (lib.optionals (apps.nodejs) [
+            pkgs.yarn
+          ])
+
+          ++ (lib.optionals (apps.golang) [
+            pkgs.go
+            pkgs.golangci-lint
+          ])
+
+          ++ (lib.optionals (apps.blog) [
+            pkgs.hugo
+            pkgs.ffmpeg
+            pkgs.imagemagick
+          ]);
         };
 
         homebrew = {
@@ -92,17 +101,26 @@
             "jetbrains-toolbox"
             "caffeine"
             "alfred"
-            "heroic"
             "mounty"
-            "whisky"
-            "discord"
-            "slack"
             "xbar"
-            "godot"
             "logitech-options"
             "logitech-camera-settings"
+          ]
+
+          ++ (lib.optionals (apps.media-player) [
             "vlc"
-          ];
+          ])
+
+          ++ (lib.optionals (apps.social) [
+            "discord"
+            "slack"
+          ])
+
+          ++ (lib.optionals (apps.games) [
+            "whisky"
+            "heroic"
+            "godot"
+          ]);
           masApps = {
             # "Yoink" = 457622435;
           };
@@ -186,6 +204,19 @@
       # Build darwin flake using:
       # $ darwin-rebuild build --flake .#home
       darwinConfigurations."home" = nix-darwin.lib.darwinSystem {
+        specialArgs = {
+          apps = {
+            blog = true;
+            cloud-manager = true;
+            kubernetes = true;
+            c-lang = true;
+            nodejs = true;
+            golang = true;
+            games = true;
+            social = true;
+            media-player = true;
+          };
+        };
         modules = [
           configuration
           nix-homebrew.darwinModules.nix-homebrew
