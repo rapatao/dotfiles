@@ -2,7 +2,7 @@
 
 This is my new (under) development dotfiles using Nix
 
-# Install Nix
+## Install Nix
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
