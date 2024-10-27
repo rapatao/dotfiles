@@ -51,7 +51,7 @@
         };
 
         nix = {
-          # package = pkgs.nix;
+          package = pkgs.nix;
 
           # Necessary for using flakes on this system.
           settings = {
@@ -101,6 +101,6 @@
       };
 
       # Expose the package set, including overlays, for convenience.
-      darwinPackages = self.darwinConfigurations."home".pkgs;
+      # darwinPackages = self.darwinConfigurations."home".pkgs;
     };
 }
