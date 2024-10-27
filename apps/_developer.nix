@@ -7,16 +7,19 @@
         pkgs.yq-go
         pkgs.git
         pkgs.git-crypt
-        pkgs.vim
 
-        # ide's
+        # editors
+        pkgs.vim
         pkgs.neovim
         pkgs.nixpkgs-fmt
 
         # c lang
         pkgs.cmake
+        pkgs.ninja
+
         # javascript
         pkgs.yarn
+
         # go lang
         pkgs.go
         pkgs.golangci-lint
