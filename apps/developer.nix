@@ -7,6 +7,17 @@ let cfg = config.install-developer; in {
   config = lib.mkIf cfg.enable {
     environment = {
       systemPackages = [
+        # development
+        pkgs.jq
+        pkgs.yq-go
+        pkgs.git
+        pkgs.git-crypt
+        pkgs.vim
+
+        # ide's
+        pkgs.neovim
+        pkgs.nixpkgs-fmt
+
         # c lang
         pkgs.cmake
         # javascript

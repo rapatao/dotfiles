@@ -30,15 +30,6 @@
         pkgs.curl
         pkgs.inetutils
         pkgs.dig
-
-        # development
-        pkgs.jq
-        pkgs.yq-go
-        pkgs.git
-        pkgs.git-crypt
-        pkgs.vim
-        pkgs.neovim
-        pkgs.nixpkgs-fmt
       ];
     };
 
