@@ -12,6 +12,9 @@
         pkgs.lua-language-server
         pkgs.ast-grep
 
+        # formatters
+        pkgs.stylua
+
         # editors
         pkgs.vim
         pkgs.neovim
