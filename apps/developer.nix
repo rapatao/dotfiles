@@ -16,5 +16,12 @@ let cfg = config.install-developer; in {
         pkgs.golangci-lint
       ];
     };
+
+    homebrew = {
+      casks = [
+        "jetbrains-toolbox"
+        "visual-studio-code"
+      ];
+    };
   };
 }
