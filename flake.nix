@@ -106,6 +106,7 @@
             "xbar"
             "logitech-options"
             "logitech-camera-settings"
+            "google-chrome"
           ]
 
           ++ (lib.optionals (apps.media-player) [
