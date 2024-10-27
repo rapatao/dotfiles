@@ -80,7 +80,13 @@
       # $ darwin-rebuild build --flake .#home
       darwinConfigurations."home" = nix-darwin.lib.darwinSystem {
         modules = [
+          configuration
+          nix-homebrew.darwinModules.nix-homebrew
           {
+            nix-homebrew = {
+              user = "rapatao";
+            };
+
             apps = {
               blog = true;
               cloud = true;
@@ -89,13 +95,6 @@
               kubernetes = true;
               media = true;
               social = true;
-            };
-          }
-          configuration
-          nix-homebrew.darwinModules.nix-homebrew
-          {
-            nix-homebrew = {
-              user = "rapatao";
             };
           }
         ];
