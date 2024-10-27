@@ -12,120 +12,27 @@
 
   outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew }:
     let
-      configuration = { pkgs, config, lib, apps, ... }: {
+      configuration = { pkgs, config, lib, ... }: {
 
-        environment = {
-          # List packages installed in system profile. To search by name, run:
-          # $ nix-env -qaP | grep wget
-          systemPackages = [
-            # dotfiles
-            pkgs.yadm
-            pkgs.mkalias
+        imports = [
+          ./apps/blog.nix
+          ./apps/cloud.nix
+          ./apps/core.nix
+          ./apps/developer.nix
+          ./apps/games.nix
+          ./apps/kubernetes.nix
+          ./apps/media.nix
+          ./apps/social.nix
+        ];
 
-            # core tools
-            pkgs.coreutils
-            pkgs.moreutils
-            pkgs.findutils
-            pkgs.gnused
-            pkgs.unixtools.watch
-            pkgs.gnutar
-
-            # other
-            pkgs.autojump
-
-            # certificates
-            pkgs.openssl
-            pkgs.gnupg
-            pkgs.transcrypt
-            pkgs.sshpass
-            pkgs.pinentry-curses
-            pkgs.pinentry_mac
-
-            # network tools
-            pkgs.wget
-            pkgs.curl
-            pkgs.inetutils
-            pkgs.dig
-
-            # development
-            pkgs.jq
-            pkgs.yq-go
-            pkgs.git
-            pkgs.git-crypt
-            pkgs.vim
-            pkgs.neovim
-            pkgs.nixpkgs-fmt
-          ]
-
-          ++ (lib.optionals (apps.cloud-manager) [
-            pkgs.infisical
-            pkgs.flyctl
-            pkgs.awscli
-          ])
-
-          ++ (lib.optionals (apps.kubernetes) [
-            pkgs.kubectl
-            pkgs.kubernetes-helm
-            pkgs.helmfile
-            pkgs.kustomize
-          ])
-
-          ++ (lib.optionals (apps.c-lang) [
-            pkgs.cmake
-          ])
-
-          ++ (lib.optionals (apps.nodejs) [
-            pkgs.yarn
-          ])
-
-          ++ (lib.optionals (apps.golang) [
-            pkgs.go
-            pkgs.golangci-lint
-          ])
-
-          ++ (lib.optionals (apps.blog) [
-            pkgs.hugo
-            pkgs.ffmpeg
-            pkgs.imagemagick
-          ]);
+        nix-homebrew = {
+          enable = true;
+          enableRosetta = true;
+          autoMigrate = true;
         };
 
         homebrew = {
           enable = true;
-          brews = [
-            "mas"
-          ];
-          casks = [
-            "iterm2"
-            "rectangle"
-            "visual-studio-code"
-            "jetbrains-toolbox"
-            "caffeine"
-            "alfred"
-            "mounty"
-            "xbar"
-            "logitech-options"
-            "logitech-camera-settings"
-            "google-chrome"
-          ]
-
-          ++ (lib.optionals (apps.media-player) [
-            "vlc"
-          ])
-
-          ++ (lib.optionals (apps.social) [
-            "discord"
-            "slack"
-          ])
-
-          ++ (lib.optionals (apps.games) [
-            "whisky"
-            "heroic"
-            "godot"
-          ]);
-          masApps = {
-            # "Yoink" = 457622435;
-          };
           onActivation = {
             cleanup = "zap";
             autoUpdate = true;
@@ -137,11 +44,11 @@
           (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
         ];
 
-	      security = {
+        security = {
           pam = {
             enableSudoTouchIdAuth = true;
           };
-	      };
+        };
         system = {
           defaults = {
             dock = {
@@ -151,7 +58,8 @@
               showhidden = true;
               persistent-apps = [
                 #"${pkgs.}"
-                "/applications/iTerm.app"
+                "/Applications/Google Chrome.app"
+                "/Applications/iTerm.app"
                 "/Applications/Slack.app"
               ];
             };
@@ -211,28 +119,21 @@
       # Build darwin flake using:
       # $ darwin-rebuild build --flake .#home
       darwinConfigurations."home" = nix-darwin.lib.darwinSystem {
-        specialArgs = {
-          apps = {
-            blog = true;
-            cloud-manager = true;
-            kubernetes = true;
-            c-lang = true;
-            nodejs = true;
-            golang = true;
-            games = true;
-            social = true;
-            media-player = true;
-          };
-        };
         modules = [
+          {
+            install-blog.enable = true;
+            install-cloud.enable = true;
+            install-developer.enable = true;
+            install-games.enable = true;
+            install-kubernetes.enable = true;
+            install-media.enable = true;
+            install-social.enable = true;
+          }
           configuration
           nix-homebrew.darwinModules.nix-homebrew
           {
             nix-homebrew = {
-              enable = true;
-              enableRosetta = true;
               user = "rapatao";
-              autoMigrate = true;
             };
           }
         ];
