@@ -8,6 +8,9 @@
         pkgs.git
         pkgs.git-crypt
 
+        # lsp
+        pkgs.lua-language-server
+
         # editors
         pkgs.vim
         pkgs.neovim
