@@ -10,6 +10,7 @@
 
         # lsp
         pkgs.lua-language-server
+        pkgs.ast-grep
 
         # editors
         pkgs.vim
