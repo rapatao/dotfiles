@@ -136,6 +136,11 @@
           (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
         ];
 
+	      security = {
+          pam = {
+            enableSudoTouchIdAuth = true;
+          };
+	      };
         system = {
           defaults = {
             dock = {
