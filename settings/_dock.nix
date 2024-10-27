@@ -12,7 +12,7 @@
             "/Applications/Google Chrome.app"
             "/Applications/iTerm.app"
           ]
-          ++ (lib.optionals (config.install-social.enable) [
+          ++ (lib.optionals (config.apps.social) [
             "/Applications/Slack.app"
             "/Applications/Discord.app"
           ]);

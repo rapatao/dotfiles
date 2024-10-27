@@ -15,15 +15,8 @@
       configuration = { pkgs, config, lib, ... }: {
 
         imports = [
-          ./apps/blog.nix
-          ./apps/cloud.nix
-          ./apps/core.nix
-          ./apps/developer.nix
-          ./apps/games.nix
-          ./apps/kubernetes.nix
-          ./apps/media.nix
-          ./apps/social.nix
-          ./settings/dock.nix
+          ./apps
+          ./settings
         ];
 
         nix-homebrew = {
@@ -41,28 +34,7 @@
           };
         };
 
-        fonts.packages = [
-          (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
-        ];
-
-        security = {
-          pam = {
-            enableSudoTouchIdAuth = true;
-          };
-        };
         system = {
-          defaults = {
-            finder = {
-              FXPreferredViewStyle = "clmv";
-            };
-
-            NSGlobalDomain = {
-              AppleICUForce24HourTime = true;
-              AppleInterfaceStyle = "Dark";
-              KeyRepeat = 2;
-            };
-          };
-
           # Set Git commit hash for darwin-version.
           configurationRevision = self.rev or self.dirtyRev or null;
 
@@ -109,13 +81,15 @@
       darwinConfigurations."home" = nix-darwin.lib.darwinSystem {
         modules = [
           {
-            install-blog.enable = true;
-            install-cloud.enable = true;
-            install-developer.enable = true;
-            install-games.enable = true;
-            install-kubernetes.enable = true;
-            install-media.enable = true;
-            install-social.enable = true;
+            apps = {
+              blog = true;
+              cloud = true;
+              developer = true;
+              games = true;
+              kubernetes = true;
+              media = true;
+              social = true;
+            };
           }
           configuration
           nix-homebrew.darwinModules.nix-homebrew

@@ -1,10 +1,5 @@
-{ lib, config, pkgs, ... }:
-let cfg = config.install-developer; in {
-  options = {
-    install-developer.enable = lib.mkEnableOption "Install Development Tools";
-  };
-
-  config = lib.mkIf cfg.enable {
+{ lib, config, pkgs, ... }: {
+  config = lib.mkIf config.apps.developer {
     environment = {
       systemPackages = [
         # development
