@@ -89,10 +89,9 @@
 
             apps = {
               blog = true;
-              cloud = true;
               developer = true;
+              devops = true;
               games = true;
-              kubernetes = true;
               media = true;
               social = true;
             };

@@ -9,8 +9,8 @@
         pkgs.git-crypt
 
         # lsp
-        pkgs.lua-language-server
-        pkgs.ast-grep
+        #pkgs.lua-language-server
+        #pkgs.ast-grep
 
         # formatters
         pkgs.stylua
@@ -31,6 +31,9 @@
         pkgs.go
         pkgs.golangci-lint
         pkgs.delve
+
+        # rust
+        pkgs.cargo
       ];
     };
 
