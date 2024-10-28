@@ -30,6 +30,7 @@
         # go lang
         pkgs.go
         pkgs.golangci-lint
+        pkgs.delve
       ];
     };
 
