@@ -8,13 +8,6 @@
         pkgs.git
         pkgs.git-crypt
 
-        # lsp
-        #pkgs.lua-language-server
-        #pkgs.ast-grep
-
-        # formatters
-        pkgs.stylua
-
         # editors
         pkgs.vim
         pkgs.neovim
@@ -25,6 +18,7 @@
         pkgs.ninja
 
         # javascript
+        pkgs.nodejs
         pkgs.yarn
 
         # go lang
