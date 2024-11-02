@@ -28,6 +28,9 @@
 
         # rust
         pkgs.cargo
+
+        # testing
+        pkgs.k6
       ];
     };
 
