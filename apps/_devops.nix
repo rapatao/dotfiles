@@ -3,7 +3,6 @@
     environment = {
       systemPackages = [
         # cloud tools
-        pkgs.infisical
         pkgs.flyctl
         pkgs.awscli
 
@@ -17,5 +16,15 @@
         pkgs.ansible
       ];
     };
+
+    homebrew = {
+        taps = [
+          "infisical/get-cli"
+        ];
+
+        brews = [
+          "infisical"
+        ];
+      };
   };
 }
