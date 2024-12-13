@@ -30,6 +30,7 @@
         pkgs.curl
         pkgs.inetutils
         pkgs.dig
+
       ];
     };
 
@@ -47,6 +48,7 @@
         "logitech-options"
         "logitech-camera-settings"
         "google-chrome"
+        "cloudflare-warp"
       ];
       onActivation = {
         cleanup = "zap";
