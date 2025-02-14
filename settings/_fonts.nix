@@ -1,7 +1,7 @@
 { config, pkgs, ... }: {
   config = {
-    fonts.packages = [
-      (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    fonts.packages = with pkgs; [
+      nerd-fonts.jetbrains-mono
     ];
   };
 }
