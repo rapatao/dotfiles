@@ -39,6 +39,11 @@
         "jetbrains-toolbox"
         "visual-studio-code"
       ];
+      onActivation = {
+        cleanup = "zap";
+        autoUpdate = true;
+        upgrade = true;
+      };
     };
   };
 }

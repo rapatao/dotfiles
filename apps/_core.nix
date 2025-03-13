@@ -13,6 +13,7 @@
         pkgs.gnused
         pkgs.unixtools.watch
         pkgs.gnutar
+        pkgs.xz
 
         # other
         pkgs.autojump
