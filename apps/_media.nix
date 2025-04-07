@@ -10,6 +10,7 @@
     homebrew = {
       casks = [
         "vlc"
+        "stremio"
       ];
       onActivation = {
         cleanup = "zap";
