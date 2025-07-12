@@ -76,6 +76,10 @@
           configuration
           nix-homebrew.darwinModules.nix-homebrew
           {
+            system = {
+              primaryUser = "rapatao";
+            };
+
             nix-homebrew = {
               user = "rapatao";
             };
