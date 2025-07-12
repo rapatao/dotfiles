@@ -14,6 +14,7 @@
           "com.apple.swipescrolldirection" = true;
 
           KeyRepeat = 2;
+          InitialKeyRepeat = 15;
         };
       };
     };
