@@ -46,7 +46,7 @@
         "alfred"
         "mounty"
         "xbar"
-        "logitech-options"
+        "logi-options+"
         "logitech-camera-settings"
         "google-chrome"
         "cloudflare-warp"
