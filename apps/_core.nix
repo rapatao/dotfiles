@@ -38,6 +38,7 @@
     homebrew = {
       brews = [
         "mas"
+        "coreutils"
       ];
       casks = [
         "iterm2"
