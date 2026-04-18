@@ -43,6 +43,9 @@
         "jetbrains-toolbox"
         "visual-studio-code"
       ];
+      brews = [
+        "rtk"
+      ];
       onActivation = {
         cleanup = "zap";
         autoUpdate = true;
