@@ -31,6 +31,10 @@
 
         # testing
         pkgs.k6
+
+        # ai agents
+        pkgs.claude-code
+        pkgs.gemini-cli
       ];
     };
 
