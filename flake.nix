@@ -65,14 +65,6 @@
           config = {
             allowUnfree = true;
           };
-          # fix zsh
-          overlays = [
-            (final: prev: {
-              zsh = prev.zsh.overrideAttrs (old: prev.lib.optionalAttrs prev.stdenv.isDarwin {
-                preConfigure = (old.preConfigure or "") + ''export zsh_cv_sys_sigsuspend=yes'';
-              });
-            })
-          ];
         };
       };
     in
@@ -94,11 +86,14 @@
 
             apps = {
               blog = true;
+              core = true;
               developer = true;
               devops = true;
               games = true;
               media = true;
+              security = true;
               social = true;
+              web = true;
             };
           }
         ];

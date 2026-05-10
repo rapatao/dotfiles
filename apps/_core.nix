@@ -1,5 +1,5 @@
-{ pkgs, ... }: {
-  config = {
+{ lib, config, pkgs, ... }: {
+  config = lib.mkIf config.apps.core {
     environment = {
       systemPackages = [
         # dotfiles
@@ -19,20 +19,11 @@
         pkgs.autojump
         pkgs.pandoc
 
-        # certificates
-        pkgs.openssl
-        pkgs.gnupg
-        pkgs.transcrypt
-        pkgs.sshpass
-        pkgs.pinentry-curses
-        pkgs.pinentry_mac
-
         # network tools
         pkgs.wget
         pkgs.curl
         pkgs.inetutils
         pkgs.dig
-
       ];
     };
 
@@ -47,17 +38,9 @@
         "caffeine"
         "alfred"
         "mounty"
-        "xbar"
         "logi-options+"
         "logitech-camera-settings"
-        "google-chrome"
-        "cloudflare-warp"
       ];
-      onActivation = {
-        cleanup = "zap";
-        autoUpdate = true;
-        upgrade = true;
-      };
     };
   };
 }
