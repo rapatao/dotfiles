@@ -17,6 +17,7 @@
 
         # other
         pkgs.autojump
+        pkgs.pandoc
 
         # certificates
         pkgs.openssl
