@@ -38,8 +38,9 @@
         "caffeine"
         "alfred"
         "mounty"
-        "logi-options+"
         "logitech-camera-settings"
+        "openlogi"
+        "puremac"
       ];
     };
   };
