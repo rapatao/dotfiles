@@ -42,6 +42,7 @@
       casks = [
         "jetbrains-toolbox"
         "visual-studio-code"
+        "docker-desktop"
       ];
       brews = [
         "rtk"
