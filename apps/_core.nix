@@ -34,6 +34,7 @@
       ];
       casks = [
         "iterm2"
+        "ghostty"
         "rectangle"
         "caffeine"
         "alfred"
