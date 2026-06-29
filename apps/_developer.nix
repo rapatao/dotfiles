@@ -7,11 +7,14 @@
         pkgs.yq-go
         pkgs.git
         pkgs.git-crypt
+        pkgs.ripgrep
+        pkgs.fd
 
         # editors
         pkgs.vim
         pkgs.neovim
         pkgs.nixpkgs-fmt
+        pkgs.tree-sitter
 
         # c lang
         pkgs.cmake
