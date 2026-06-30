@@ -18,6 +18,7 @@
         # other
         pkgs.autojump
         pkgs.pandoc
+        pkgs.nur.repos.rapatao.md2
 
         # network tools
         pkgs.wget

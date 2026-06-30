@@ -8,9 +8,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, nur }:
     let
       configuration = { pkgs, config, lib, ... }: {
 
@@ -62,6 +66,7 @@
         # The platform the configuration will be used on.
         nixpkgs = {
           hostPlatform = "aarch64-darwin";
+          overlays = [ nur.overlays.default ];
           config = {
             allowUnfree = true;
           };
