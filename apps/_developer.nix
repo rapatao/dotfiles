@@ -38,6 +38,9 @@
         # ai agents
         pkgs.claude-code
         pkgs.gemini-cli
+
+        # others
+        pkgs.github-cli
       ];
     };
 

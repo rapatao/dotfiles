@@ -10,7 +10,7 @@
           persistent-apps = [
             #"${pkgs.}"
             "/Applications/Google Chrome.app"
-            "/Applications/iTerm.app"
+            "/Applications/Ghostty.app"
           ]
           ++ (lib.optionals (config.apps.social) [
             "/Applications/Slack.app"
