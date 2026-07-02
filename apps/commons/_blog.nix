@@ -6,11 +6,5 @@
         pkgs.imagemagick
       ];
     };
-
-    homebrew = {
-      casks = [
-        # Add blog-related casks here
-      ];
-    };
   };
 }

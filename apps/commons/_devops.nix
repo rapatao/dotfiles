@@ -16,15 +16,5 @@
         pkgs.ansible
       ];
     };
-
-    homebrew = {
-        taps = [
-          "infisical/get-cli"
-        ];
-
-        brews = [
-          "infisical"
-        ];
-      };
   };
 }

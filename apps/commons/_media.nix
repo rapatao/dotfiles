@@ -6,12 +6,5 @@
         pkgs.imagemagick
       ];
     };
-
-    homebrew = {
-      casks = [
-        "vlc"
-        "stremio"
-      ];
-    };
   };
 }

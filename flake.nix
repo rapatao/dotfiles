@@ -16,92 +16,55 @@
 
   outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, nur }:
     let
-      configuration = { pkgs, config, lib, ... }: {
+      mkDarwinConfig = { hostUser, hostUid, apps }:
+        nix-darwin.lib.darwinSystem {
+          specialArgs = { inherit inputs self; };
+          modules = [
+            ./common.nix
+            ./darwin-common.nix
+            nix-homebrew.darwinModules.nix-homebrew
+            ({ pkgs, ... }: {
+              system = {
+                primaryUser = hostUser;
+              };
 
-        imports = [
-          ./apps
-          ./settings
-        ];
+              nix-homebrew = {
+                user = hostUser;
+              };
 
-        nix-homebrew = {
-          enable = true;
-          enableRosetta = true;
-          autoMigrate = true;
+              # keep /etc/shells and this account's UserShell in sync with
+              # whichever zsh nix currently provides, so the login shell and
+              # the zsh that compiles ~/.zcompdump.zwc are always the same
+              # binary/version.
+              environment.shells = [ pkgs.zsh ];
+              users.knownUsers = [ hostUser ];
+              users.users.${hostUser} = {
+                uid = hostUid;
+                shell = pkgs.zsh;
+              };
+
+              inherit apps;
+            })
+          ];
         };
-
-        homebrew = {
-          enable = true;
-          onActivation = {
-            cleanup = "zap";
-            autoUpdate = true;
-            upgrade = true;
-          };
-        };
-
-        system = {
-          # Set Git commit hash for darwin-version.
-          configurationRevision = self.rev or self.dirtyRev or null;
-
-          # Used for backwards compatibility, please read the changelog before changing.
-          # $ darwin-rebuild changelog
-          stateVersion = 5;
-        };
-
-        nix = {
-          package = pkgs.nix;
-
-          # Necessary for using flakes on this system.
-          settings = {
-            experimental-features = "nix-command flakes";
-          };
-        };
-
-        programs = {
-          zsh = {
-            # Create /etc/zshrc that loads the nix-darwin environment.
-            enable = true; # default shell on catalina
-          };
-        };
-
-        # The platform the configuration will be used on.
-        nixpkgs = {
-          hostPlatform = "aarch64-darwin";
-          overlays = [ nur.overlays.default ];
-          config = {
-            allowUnfree = true;
-          };
-        };
-      };
     in
     {
       # Build darwin flake using:
       # $ darwin-rebuild build --flake .#home
-      darwinConfigurations."home" = nix-darwin.lib.darwinSystem {
-        modules = [
-          configuration
-          nix-homebrew.darwinModules.nix-homebrew
-          {
-            system = {
-              primaryUser = "rapatao";
-            };
-
-            nix-homebrew = {
-              user = "rapatao";
-            };
-
-            apps = {
-              blog = true;
-              core = true;
-              developer = true;
-              devops = true;
-              games = true;
-              media = true;
-              security = true;
-              social = true;
-              web = true;
-            };
-          }
-        ];
+      darwinConfigurations."home" = mkDarwinConfig {
+        hostUser = "rapatao";
+        hostUid = 501;
+        apps = {
+          blog = true;
+          core = true;
+          developer = true;
+          devops = true;
+          games = true;
+          media = true;
+          security = true;
+          social = true;
+          web = true;
+        };
       };
 
       # Expose the package set, including overlays, for convenience.

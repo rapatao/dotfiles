@@ -43,16 +43,5 @@
         pkgs.github-cli
       ];
     };
-
-    homebrew = {
-      casks = [
-        "jetbrains-toolbox"
-        "visual-studio-code"
-        "docker-desktop"
-      ];
-      brews = [
-        "rtk"
-      ];
-    };
   };
 }
