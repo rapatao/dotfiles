@@ -19,6 +19,7 @@
         pkgs.autojump
         pkgs.pandoc
         pkgs.nur.repos.rapatao.md2
+        pkgs.obsidian
 
         # network tools
         pkgs.wget
