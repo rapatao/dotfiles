@@ -14,6 +14,7 @@
 
         # others
         pkgs.ansible
+        pkgs.colmena
       ];
     };
   };
