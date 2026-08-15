@@ -18,6 +18,14 @@
           ]);
         };
       };
+
+      # nix-darwin applies system.defaults.dock with `killall Dock`, but the Dock
+      # exits 0 on SIGTERM and its LaunchAgent is KeepAlive.SuccessfulExit = false,
+      # so launchd treats it as done and never brings it back.
+      activationScripts.postActivation.text = ''
+        uid=$(id -u -- ${config.system.primaryUser})
+        pgrep -qx Dock || launchctl kickstart "gui/$uid/com.apple.Dock.agent" || true
+      '';
     };
 
   };
