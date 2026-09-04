@@ -7,7 +7,7 @@
         pkgs.transcrypt
         pkgs.sshpass
         pkgs.pinentry-curses
-      ] ++ lib.optional pkgs.stdenv.isDarwin pkgs.pinentry_mac;
+      ] ++ lib.optional pkgs.stdenv.hostPlatform.isDarwin pkgs.pinentry_mac;
     };
   };
 }

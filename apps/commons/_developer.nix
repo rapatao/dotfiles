@@ -37,7 +37,7 @@
 
         # ai agents
         pkgs.claude-code
-        pkgs.gemini-cli
+        pkgs.antigravity-cli
 
         # others
         pkgs.github-cli
