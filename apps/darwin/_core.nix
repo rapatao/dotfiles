@@ -2,7 +2,7 @@
   config = lib.mkIf config.apps.core {
     homebrew = {
       taps = [
-        "rapatao/tap"
+        { name = "rapatao/tap"; trusted = true; }
       ];
       brews = [
         "mas"
