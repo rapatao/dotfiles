@@ -16,7 +16,7 @@
 
   outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, nur }:
     let
-      mkDarwinConfig = { hostUser, hostUid ? null, apps }:
+      mkDarwinConfig = { hostUser, hostUid ? null, determinate ? false, apps }:
         nix-darwin.lib.darwinSystem {
           specialArgs = { inherit inputs self; };
           modules = [
@@ -27,6 +27,9 @@
               system = {
                 primaryUser = hostUser;
               };
+
+              # Determinate runs its own nix daemon; nix-darwin aborts activation if it also manages nix.
+              nix.enable = !determinate;
 
               nix-homebrew = {
                 user = hostUser;
@@ -74,6 +77,7 @@
       # No hostUid: user accounts are left unmanaged.
       darwinConfigurations."work-m5-pro" = mkDarwinConfig {
         hostUser = "luiz.rapatao";
+        determinate = true;
         apps = {
           core = true;
           developer = true;
