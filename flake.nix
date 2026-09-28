@@ -75,7 +75,7 @@
 
       # $ darwin-rebuild build --flake .#work-m5-pro
       # No hostUid: user accounts are left unmanaged.
-      darwinConfigurations."work-m5-pro" = mkDarwinConfig {
+      darwinConfigurations."MPT-M14KJFY0RW" = mkDarwinConfig {
         hostUser = "luiz.rapatao";
         determinate = true;
         apps = {
