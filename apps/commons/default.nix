@@ -6,9 +6,9 @@
     apps.devops = lib.mkEnableOption "Install devops tools";
     apps.games = lib.mkEnableOption "Install gaming tools";
     apps.media = lib.mkEnableOption "Install media tools";
+    apps.personal = lib.mkEnableOption "Install personal-use tools within the enabled groups";
     apps.security = lib.mkEnableOption "Install security tools";
-    apps.social = lib.mkEnableOption "Install social media tools";
-    apps.web = lib.mkEnableOption "Install web tools";
+    apps.social = lib.mkEnableOption "Install social media tools";    apps.web = lib.mkEnableOption "Install web tools";
   };
 
   imports = [

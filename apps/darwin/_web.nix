@@ -3,6 +3,7 @@
     homebrew = {
       casks = [
         "google-chrome"
+      ] ++ lib.optionals config.apps.personal [
         "cloudflare-warp"
       ];
     };

@@ -16,14 +16,14 @@
 
   outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, nur }:
     let
-      mkDarwinConfig = { hostUser, hostUid, apps }:
+      mkDarwinConfig = { hostUser, hostUid ? null, apps }:
         nix-darwin.lib.darwinSystem {
           specialArgs = { inherit inputs self; };
           modules = [
             ./common.nix
             ./darwin-common.nix
             nix-homebrew.darwinModules.nix-homebrew
-            ({ pkgs, ... }: {
+            ({ pkgs, lib, ... }: {
               system = {
                 primaryUser = hostUser;
               };
@@ -37,10 +37,12 @@
               # the zsh that compiles ~/.zcompdump.zwc are always the same
               # binary/version.
               environment.shells = [ pkgs.zsh ];
-              users.knownUsers = [ hostUser ];
-              users.users.${hostUser} = {
-                uid = hostUid;
-                shell = pkgs.zsh;
+              users = lib.mkIf (hostUid != null) {
+                knownUsers = [ hostUser ];
+                users.${hostUser} = {
+                  uid = hostUid;
+                  shell = pkgs.zsh;
+                };
               };
 
               inherit apps;
@@ -61,8 +63,22 @@
           devops = true;
           games = true;
           media = true;
+          personal = true;
           security = true;
           social = true;
+          web = true;
+        };
+      };
+
+      # $ darwin-rebuild build --flake .#work-m5-pro
+      # No hostUid: user accounts are left unmanaged.
+      darwinConfigurations."work-m5-pro" = mkDarwinConfig {
+        hostUser = "luiz.rapatao";
+        apps = {
+          core = true;
+          developer = true;
+          devops = true;
+          security = true;
           web = true;
         };
       };

@@ -9,16 +9,15 @@
         "coreutils"
       ];
       casks = [
-        "iterm2"
         "ghostty"
         "rectangle"
         "caffeine"
         "alfred"
         "mounty"
-        "logitech-camera-settings"
         "openlogi"
-        "puremac"
         "virtual-display"
+      ] ++ lib.optionals config.apps.personal [
+        "puremac"
       ];
     };
   };

@@ -3,7 +3,6 @@
     environment = {
       systemPackages = [
         # cloud tools
-        pkgs.flyctl
         pkgs.awscli
 
         # kubernetes
@@ -11,8 +10,8 @@
         pkgs.kubernetes-helm
         pkgs.helmfile
         pkgs.kustomize
-
-        # others
+      ] ++ lib.optionals config.apps.personal [
+        pkgs.flyctl
         pkgs.ansible
         pkgs.colmena
       ];

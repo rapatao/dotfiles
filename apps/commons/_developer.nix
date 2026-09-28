@@ -37,10 +37,11 @@
 
         # ai agents
         pkgs.claude-code
-        pkgs.antigravity-cli
 
         # others
         pkgs.github-cli
+      ] ++ lib.optionals config.apps.personal [
+        pkgs.antigravity-cli
       ];
     };
   };
