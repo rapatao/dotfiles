@@ -18,6 +18,7 @@
         # other
         pkgs.autojump
         pkgs.pandoc
+        pkgs.imagemagick
         pkgs.nur.repos.rapatao.md2
         pkgs.obsidian
 

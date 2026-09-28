@@ -3,7 +3,6 @@
     environment = {
       systemPackages = [
         pkgs.ffmpeg
-        pkgs.imagemagick
       ];
     };
   };
