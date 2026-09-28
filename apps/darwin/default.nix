@@ -9,6 +9,7 @@
     ./_devops.nix
     ./_games.nix
     ./_media.nix
+    ./_security.nix
     ./_social.nix
     ./_web.nix
   ];
