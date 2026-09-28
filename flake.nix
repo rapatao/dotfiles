@@ -55,8 +55,8 @@
     in
     {
       # Build darwin flake using:
-      # $ darwin-rebuild build --flake .#home
-      darwinConfigurations."home" = mkDarwinConfig {
+      # $ darwin-rebuild build --flake .
+      darwinConfigurations."rapats-m3" = mkDarwinConfig {
         hostUser = "rapatao";
         hostUid = 501;
         apps = {
@@ -88,6 +88,6 @@
       };
 
       # Expose the package set, including overlays, for convenience.
-      # darwinPackages = self.darwinConfigurations."home".pkgs;
+      # darwinPackages = self.darwinConfigurations."rapats-m3".pkgs;
     };
 }
