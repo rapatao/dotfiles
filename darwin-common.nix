@@ -71,6 +71,18 @@ in
           | ${pkgs.jq}/bin/jq -r '.casks[].artifacts[] | .app? // empty | .[] | strings')
       fi
     '')
+    # Wraps nix-darwin's `brew bundle` (order 1000) so a cask macOS refuses to
+    # modify (App Management privacy permission) doesn't abort the activation.
+    (lib.mkOrder 999 ''
+      if ! {
+    '')
+    (lib.mkOrder 1001 ''
+      }; then
+        echo >&2 "warning: brew bundle failed, continuing activation."
+        echo >&2 "  'Operation not permitted' on an app: allow your terminal in"
+        echo >&2 "  System Settings > Privacy & Security > App Management, then rebuild."
+      fi
+    '')
     (lib.mkAfter ''
       for appPath in "''${relaunchApps[@]}"; do
         echo >&2 "reopening $(basename "$appPath")..."
