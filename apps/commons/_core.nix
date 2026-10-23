@@ -21,6 +21,7 @@
         pkgs.imagemagick
         pkgs.nur.repos.rapatao.md2
         pkgs.obsidian
+        pkgs.uhubctl
 
         # network tools
         pkgs.wget

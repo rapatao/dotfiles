@@ -4,6 +4,7 @@
       systemPackages = [
         # cloud tools
         pkgs.awscli
+        pkgs.aws-vault
 
         # kubernetes
         pkgs.kubectl
