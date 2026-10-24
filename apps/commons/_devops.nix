@@ -3,7 +3,7 @@
     environment = {
       systemPackages = [
         # cloud tools
-        pkgs.awscli
+        pkgs.awscli2
         pkgs.aws-vault
 
         # kubernetes
