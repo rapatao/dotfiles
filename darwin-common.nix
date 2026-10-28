@@ -73,21 +73,32 @@ in
     '')
     # Wraps nix-darwin's `brew bundle` (order 1000) so a cask macOS refuses to
     # modify (App Management privacy permission) doesn't abort the activation.
+    # Failed entries are collected from its output and summarized at the end.
     (lib.mkOrder 999 ''
+      bundleLog=$(mktemp)
+      bundleFailures=""
       if ! {
     '')
     (lib.mkOrder 1001 ''
-      }; then
-        echo >&2 "warning: brew bundle failed, continuing activation."
-        echo >&2 "  'Operation not permitted' on an app: allow your terminal in"
-        echo >&2 "  System Settings > Privacy & Security > App Management, then rebuild."
+      } 2>&1 | tee "$bundleLog"; then
+        bundleFailures=$(grep -E 'has failed!|Error:' "$bundleLog" || true)
+        [ -n "$bundleFailures" ] || bundleFailures="brew bundle failed, see output above"
       fi
+      rm -f "$bundleLog"
     '')
     (lib.mkAfter ''
       for appPath in "''${relaunchApps[@]}"; do
         echo >&2 "reopening $(basename "$appPath")..."
         asBrewUser open -g "$appPath" || true
       done
+      if [ -n "$bundleFailures" ]; then
+        echo >&2 "warning: brew bundle failures, activation continued:"
+        printf '%s\n' "$bundleFailures" | sed 's/^/  /' >&2
+        echo >&2 "  'Operation not permitted' on an app: allow your terminal in"
+        echo >&2 "  System Settings > Privacy & Security > App Management, then rebuild."
+        echo >&2 "  'already an App at': brew lost track of it, run"
+        echo >&2 "  'brew install --cask --adopt <cask>' (or --force), then rebuild."
+      fi
     '')
   ];
 
