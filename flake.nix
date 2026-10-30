@@ -62,11 +62,13 @@
         apps = {
           blog = true;
           core = true;
-          developer = true;
+          developer = {
+            enable = true;
+            exclude = [ "clasp" ];
+          };
           devops = true;
           games = true;
           media = true;
-          personal = true;
           security = true;
           social = true;
           web = true;
@@ -79,11 +81,23 @@
         hostUser = "luiz.rapatao";
         determinate = true;
         apps = {
-          core = true;
-          developer = true;
-          devops = true;
+          core = {
+            enable = true;
+            exclude = [ "puremac" ];
+          };
+          developer = {
+            enable = true;
+            exclude = [ "antigravity-cli" "ai-memory" ];
+          };
+          devops = {
+            enable = true;
+            exclude = [ "flyctl" "ansible-core" "colmena" "infisical" ];
+          };
           security = true;
-          web = true;
+          web = {
+            enable = true;
+            exclude = [ "cloudflare-warp" ];
+          };
         };
       };
 

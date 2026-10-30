@@ -1,10 +1,7 @@
-{ lib, config, ... }: {
-  config = lib.mkIf config.apps.media {
-    homebrew = {
-      casks = [
-        "vlc"
-        "stremio"
-      ];
-    };
-  };
+{ lib, config, ... }:
+(import ../group.nix { inherit lib config; } "media").homebrew {
+  casks = [
+    "vlc"
+    "stremio"
+  ];
 }

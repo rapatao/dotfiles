@@ -1,10 +1,5 @@
-{ lib, config, pkgs, ... }: {
-  config = lib.mkIf config.apps.blog {
-    environment = {
-      systemPackages = [
-        pkgs.hugo
-        pkgs.imagemagick
-      ];
-    };
-  };
-}
+{ lib, config, pkgs, ... }:
+(import ../group.nix { inherit lib config; } "blog").packages [
+  pkgs.hugo
+  pkgs.imagemagick
+]

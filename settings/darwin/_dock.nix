@@ -1,13 +1,12 @@
 { config, lib, pkgs, ... }:
 let
+  casks = map (cask: cask.name) config.homebrew.casks;
   dockApps = [
     "/Applications/Google Chrome.app"
     "/Applications/Ghostty.app"
   ]
-  ++ (lib.optionals (config.apps.social) [
-    "/Applications/Slack.app"
-    "/Applications/Discord.app"
-  ]);
+  ++ lib.optional (lib.elem "slack" casks) "/Applications/Slack.app"
+  ++ lib.optional (lib.elem "discord" casks) "/Applications/Discord.app";
 in
 {
   config = {

@@ -1,11 +1,8 @@
-{ lib, config, ... }: {
-  config = lib.mkIf config.apps.games {
-    homebrew = {
-      casks = [
-        "whisky"
-        "heroic"
-        "godot"
-      ];
-    };
-  };
+{ lib, config, ... }:
+(import ../group.nix { inherit lib config; } "games").homebrew {
+  casks = [
+    "whisky"
+    "heroic"
+    "godot"
+  ];
 }

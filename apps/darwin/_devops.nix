@@ -1,13 +1,9 @@
-{ lib, config, ... }: {
-  config = lib.mkIf (config.apps.devops && config.apps.personal) {
-    homebrew = {
-      taps = [
-        "infisical/get-cli"
-      ];
-
-      brews = [
-        "infisical"
-      ];
-    };
-  };
+{ lib, config, ... }:
+(import ../group.nix { inherit lib config; } "devops").homebrew {
+  taps = [
+    "infisical/get-cli"
+  ];
+  brews = [
+    "infisical/get-cli/infisical"
+  ];
 }
