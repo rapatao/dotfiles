@@ -36,6 +36,7 @@
 
   # ai agents
   pkgs.claude-code
+  pkgs.opencode
   pkgs.antigravity-cli
 
   # others
